@@ -1,4 +1,5 @@
-import { Outlet, Link, useParams } from "react-router-dom";
+import { Outlet, Link, useParams, Route } from "react-router-dom";
+import useToggle from "react-use/lib/useToggle";
 
 function Layout() {
   return (
@@ -64,7 +65,7 @@ function CoursesIndex() {
 }
 
 function Course() {
-  let { id = '' } = useParams<"id">();
+  let { id } = useParams<"id">();
 
   return (
     <div>
@@ -82,12 +83,16 @@ function capitalizeString(s: string): string {
 }
 
 function NoMatch() {
+  const [overed, setOvered] = useToggle(false);
+
   return (
     <div>
       <h2>It looks like you're lost...</h2>
       <p>
         <Link to="/">Go to the home page</Link>
       </p>
+      <div>我来过这里：{overed ? "是" : "否"}</div>
+      <button onClick={setOvered}>{overed ? "没来过" : "来过"}</button>
     </div>
   );
 }
@@ -118,6 +123,9 @@ export const generateRoutes = (router: Router[]) => {
     if (route.path) {
       if (component) {
         route.element = component.component;
+        if (route.keepAlive) {
+          console.log(component.component);
+        }
 
         if (component.index) {
           if (route.children) {

@@ -34,6 +34,7 @@ function App() {
           },
           {
             path: "*",
+            keepAlive: true,
           },
         ],
       },

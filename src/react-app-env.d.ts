@@ -61,4 +61,5 @@ declare interface Router {
   index?: boolean;
   path?: string;
   name?: string;
+  keepAlive?: boolean
 }
